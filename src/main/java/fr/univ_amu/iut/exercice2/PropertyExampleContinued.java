@@ -28,6 +28,16 @@ public class PropertyExampleContinued {
     }
 
     void bindAndUnbindOnePropertyToAnother() {
-        throw new RuntimeException("Not yet implemented !");
+        IntegerProperty otherProperty = new SimpleIntegerProperty(0);
+        System.out.println("otherProperty.get() = " + otherProperty.get() + "\nBinding otherProperty to anIntProperty.");
+        otherProperty.bind(anIntProperty());
+        System.out.println("otherProperty.get() = " + otherProperty.get());
+        System.out.println("Calling anIntProperty.set(7168).");
+        anIntProperty().set(7168);
+        System.out.println("otherProperty.get() = " + otherProperty.get());
+        otherProperty.unbind();
+        System.out.println("otherProperty.get() = " + otherProperty.get());
+        anIntProperty.set(8192);
+        System.out.println("otherProperty.get() = " + otherProperty.get());
     }
 }
