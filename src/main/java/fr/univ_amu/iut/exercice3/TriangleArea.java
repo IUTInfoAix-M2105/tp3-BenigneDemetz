@@ -150,14 +150,12 @@ public class TriangleArea {
         NumberBinding x2y3 = Bindings.multiply(x2,y3);
         NumberBinding x3y1 = Bindings.multiply(x3,y1);
         NumberBinding x3y2 = Bindings.multiply(x3,y2);
-        NumberBinding result = Bindings.subtract(Bindings.add(Bindings.subtract(Bindings.add(Bindings.
-                                                    subtract(x1y2,x1y3),x2y3),x2y1),x3y1),x3y2);
-        NumberBinding resultsquared = Bindings.multiply(result, result);
-        NumberBinding resultabs = Bindings.divide(resultsquared,resultsquared);
-        NumberBinding resultdivided = Bindings.divide(resultabs,2);
-        System.out.println(resultdivided);
-
-
-
+        NumberBinding x1y2x1y3 = x1y2.subtract(x1y3);
+        NumberBinding x1y2x1y3x2y3 = x1y2x1y3.add(x2y3);
+        NumberBinding x1y2x1y3x2y3x2y1 = x1y2x1y3x2y3.subtract(x2y1);
+        NumberBinding x1y2x1y3x2y3x2y1x3y1 = x1y2x1y3x2y3x2y1.add(x3y1);
+        NumberBinding result = x1y2x1y3x2y3x2y1x3y1.subtract(x3y2);
+        Bindings.divide(Bindings.multiply(result, result), result);
+        result.divide(2.0);
     }
 }
