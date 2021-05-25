@@ -1,6 +1,7 @@
 package fr.univ_amu.iut.exercice3_2;
 
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.IntegerProperty;
@@ -67,6 +68,19 @@ public class TriangleArea {
     }
 
     private void createBinding() {
-        throw new RuntimeException("Not yet implemented !");
+        NumberBinding x1y2 = Bindings.multiply(x1, y2);
+        NumberBinding x1y3 = Bindings.multiply(x1,y3);
+        NumberBinding x2y1 = Bindings.multiply(x2,y1);
+        NumberBinding x2y3 = Bindings.multiply(x2,y3);
+        NumberBinding x3y1 = Bindings.multiply(x3,y1);
+        NumberBinding x3y2 = Bindings.multiply(x3,y2);
+        NumberBinding x1y2x1y3 = Bindings.subtract(x1y2, x1y3);
+        NumberBinding x1y2x1y3x2y3 = Bindings.add(x1y2x1y3, x2y3);
+        NumberBinding x1y2x1y3x2y3x2y1 = Bindings.subtract(x1y2x1y3x2y3, x2y1);
+        NumberBinding x1y2x1y3x2y3x2y1x3y1 = Bindings.add(x1y2x1y3x2y3x2y1, x3y1);
+        NumberBinding result = Bindings.subtract(x1y2x1y3x2y3x2y1x3y1, x3y2);
+        NumberBinding nB = Bindings.when(Bindings.lessThan(result, 0)).then(Bindings.negate(result)).otherwise(result);
+
+        area = Bindings.divide(nB,2.0);
     }
 }

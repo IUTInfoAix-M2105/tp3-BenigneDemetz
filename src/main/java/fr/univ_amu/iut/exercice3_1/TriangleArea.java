@@ -64,7 +64,8 @@ public class TriangleArea {
     }
 
     void printResult() {
-        output = Bindings.format("For P1(%d,%d), P2(%d,%d), P3(%d,%d), the area of triangle ABC is %.1f", x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue(), x3.getValue(), y3.getValue(), getArea());
+        output = Bindings.format("For P1(%d,%d), P2(%d,%d), P3(%d,%d), the area of triangle ABC is %.1f",
+                x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue(), x3.getValue(), y3.getValue(), getArea());
         System.out.println(output.getValue());
     }
 
