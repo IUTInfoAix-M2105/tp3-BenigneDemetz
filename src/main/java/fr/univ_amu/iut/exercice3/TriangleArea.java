@@ -3,6 +3,7 @@ package fr.univ_amu.iut.exercice3;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
+import javafx.beans.binding.When;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -13,11 +14,11 @@ public class TriangleArea {
     private IntegerProperty x1 = new SimpleIntegerProperty(0);
     private IntegerProperty y1 = new SimpleIntegerProperty(0);
 
-    private IntegerProperty x2 = new SimpleIntegerProperty(0);
+    private IntegerProperty x2 = new SimpleIntegerProperty(1);
     private IntegerProperty y2 = new SimpleIntegerProperty(0);
 
     private IntegerProperty x3 = new SimpleIntegerProperty(0);
-    private IntegerProperty y3 = new SimpleIntegerProperty(0);
+    private IntegerProperty y3 = new SimpleIntegerProperty(1);
 
     private DoubleProperty area = new SimpleDoubleProperty(0);
 
@@ -139,23 +140,23 @@ public class TriangleArea {
     }
 
     void printResult() {
-        createBinding();
+        System.out.println(area);
     }
 
     private void createBinding() {
-        NumberBinding x1y2 = Bindings.multiply(x1,y2);
-        System.out.println();
-        NumberBinding x1y3 = Bindings.multiply(x2,y3);
-        NumberBinding x2y1 = Bindings.multiply(x2,y1);
-        NumberBinding x2y3 = Bindings.multiply(x2,y3);
-        NumberBinding x3y1 = Bindings.multiply(x3,y1);
-        NumberBinding x3y2 = Bindings.multiply(x3,y2);
-        NumberBinding x1y2x1y3 = x1y2.subtract(x1y3);
-        NumberBinding x1y2x1y3x2y3 = x1y2x1y3.add(x2y3);
-        NumberBinding x1y2x1y3x2y3x2y1 = x1y2x1y3x2y3.subtract(x2y1);
-        NumberBinding x1y2x1y3x2y3x2y1x3y1 = x1y2x1y3x2y3x2y1.add(x3y1);
-        NumberBinding result = x1y2x1y3x2y3x2y1x3y1.subtract(x3y2);
-        Bindings.divide(Bindings.multiply(result, result), result);
-        result.divide(2.0);
+        NumberBinding x1y2 = Bindings.multiply(x1, y2);
+        NumberBinding x1y3 = Bindings.multiply(0,y3);
+        NumberBinding x2y1 = Bindings.multiply(1,y1);
+        NumberBinding x2y3 = Bindings.multiply(1,y3);
+        NumberBinding x3y1 = Bindings.multiply(0,y1);
+        NumberBinding x3y2 = Bindings.multiply(0,y2);
+        NumberBinding x1y2x1y3 = Bindings.subtract(x1y2, x1y3);
+        NumberBinding x1y2x1y3x2y3 = Bindings.add(x1y2x1y3, x2y3);
+        NumberBinding x1y2x1y3x2y3x2y1 = Bindings.subtract(x1y2x1y3x2y3, x2y1);
+        NumberBinding x1y2x1y3x2y3x2y1x3y1 = Bindings.add(x1y2x1y3x2y3x2y1, x3y1);
+        NumberBinding result = Bindings.subtract(x1y2x1y3x2y3x2y1x3y1, x3y2);
+        NumberBinding nB = Bindings.when(Bindings.lessThan(0, result)).then(Bindings.negate(result)).otherwise(result);
+        result = Bindings.divide(result, 2.0);
+        area.bind(result);
     }
 }

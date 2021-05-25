@@ -26,7 +26,6 @@ public class TriangleAreaTest {
         assertThat(triangleArea.getArea()).isZero();
     }
 
-    @Disabled
     @Test
     public void should_an_unity_triangle_have_a_0_5_area() throws Exception {
         triangleArea.setP1(0, 0);
