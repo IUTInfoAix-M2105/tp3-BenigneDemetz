@@ -155,7 +155,7 @@ public class TriangleArea {
         NumberBinding x1y2x1y3x2y3x2y1 = Bindings.subtract(x1y2x1y3x2y3, x2y1);
         NumberBinding x1y2x1y3x2y3x2y1x3y1 = Bindings.add(x1y2x1y3x2y3x2y1, x3y1);
         NumberBinding result = Bindings.subtract(x1y2x1y3x2y3x2y1x3y1, x3y2);
-        NumberBinding nB = Bindings.when(Bindings.lessThan(0, result)).then(Bindings.negate(result)).otherwise(result);
+        NumberBinding nB = Bindings.when(Bindings.lessThan(result, 0)).then(Bindings.negate(result)).otherwise(result);
         result = Bindings.divide(nB, 2.0);
         area.bind(result);
     }

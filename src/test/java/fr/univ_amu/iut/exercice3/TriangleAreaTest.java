@@ -33,8 +33,7 @@ public class TriangleAreaTest {
         triangleArea.setP3(0, 1);
         assertThat(triangleArea.getArea()).isEqualTo(0.5);
     }
-
-    @Disabled
+    
     @Test
     public void should_triangle1_have_a_correct_area() throws Exception {
         triangleArea.setP1(0, 0);
