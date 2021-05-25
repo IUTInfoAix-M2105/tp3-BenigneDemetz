@@ -145,18 +145,18 @@ public class TriangleArea {
 
     private void createBinding() {
         NumberBinding x1y2 = Bindings.multiply(x1, y2);
-        NumberBinding x1y3 = Bindings.multiply(0,y3);
-        NumberBinding x2y1 = Bindings.multiply(1,y1);
-        NumberBinding x2y3 = Bindings.multiply(1,y3);
-        NumberBinding x3y1 = Bindings.multiply(0,y1);
-        NumberBinding x3y2 = Bindings.multiply(0,y2);
+        NumberBinding x1y3 = Bindings.multiply(x1,y3);
+        NumberBinding x2y1 = Bindings.multiply(x2,y1);
+        NumberBinding x2y3 = Bindings.multiply(x2,y3);
+        NumberBinding x3y1 = Bindings.multiply(x3,y1);
+        NumberBinding x3y2 = Bindings.multiply(x3,y2);
         NumberBinding x1y2x1y3 = Bindings.subtract(x1y2, x1y3);
         NumberBinding x1y2x1y3x2y3 = Bindings.add(x1y2x1y3, x2y3);
         NumberBinding x1y2x1y3x2y3x2y1 = Bindings.subtract(x1y2x1y3x2y3, x2y1);
         NumberBinding x1y2x1y3x2y3x2y1x3y1 = Bindings.add(x1y2x1y3x2y3x2y1, x3y1);
         NumberBinding result = Bindings.subtract(x1y2x1y3x2y3x2y1x3y1, x3y2);
         NumberBinding nB = Bindings.when(Bindings.lessThan(0, result)).then(Bindings.negate(result)).otherwise(result);
-        result = Bindings.divide(result, 2.0);
+        result = Bindings.divide(nB, 2.0);
         area.bind(result);
     }
 }
