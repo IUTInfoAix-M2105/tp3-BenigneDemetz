@@ -14,19 +14,22 @@ public class TriangleArea {
     private IntegerProperty x1 = new SimpleIntegerProperty(0);
     private IntegerProperty y1 = new SimpleIntegerProperty(0);
 
-    private IntegerProperty x2 = new SimpleIntegerProperty(1);
+    private IntegerProperty x2 = new SimpleIntegerProperty(0);
     private IntegerProperty y2 = new SimpleIntegerProperty(0);
 
     private IntegerProperty x3 = new SimpleIntegerProperty(0);
-    private IntegerProperty y3 = new SimpleIntegerProperty(1);
+    private IntegerProperty y3 = new SimpleIntegerProperty(0);
 
     private DoubleProperty area = new SimpleDoubleProperty(0);
+
+    String msg = "For ";
 
     public TriangleArea() {
         createBinding();
     }
 
     public static void main(String[] args) {
+
         TriangleArea triangleArea = new TriangleArea();
 
         triangleArea.printResult();
@@ -140,7 +143,9 @@ public class TriangleArea {
     }
 
     void printResult() {
-        System.out.println(area);
+
+        System.out.println("For P1(" + getX1() + "," + getY1() + "), P2("  + getX2() + "," + getY2() + "), P3(" +
+                getX3() + "," + getY3() + "), the area of triangle ABC is " + getArea());
     }
 
     private void createBinding() {
