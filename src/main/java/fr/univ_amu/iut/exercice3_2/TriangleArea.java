@@ -2,6 +2,7 @@ package fr.univ_amu.iut.exercice3_2;
 
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.IntegerProperty;
@@ -64,23 +65,28 @@ public class TriangleArea {
     }
 
     void printResult() {
-        throw new RuntimeException("Not yet implemented !");
+        output = Bindings.format("For P1(%d,%d), P2(%d,%d), P3(%d,%d), the area of triangle ABC is %.1f",
+                x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue(), x3.getValue(), y3.getValue(), getArea());
+        System.out.println(output.getValue());
     }
 
     private void createBinding() {
-        NumberBinding x1y2 = Bindings.multiply(x1, y2);
-        NumberBinding x1y3 = Bindings.multiply(x1,y3);
-        NumberBinding x2y1 = Bindings.multiply(x2,y1);
-        NumberBinding x2y3 = Bindings.multiply(x2,y3);
-        NumberBinding x3y1 = Bindings.multiply(x3,y1);
-        NumberBinding x3y2 = Bindings.multiply(x3,y2);
-        NumberBinding x1y2x1y3 = Bindings.subtract(x1y2, x1y3);
-        NumberBinding x1y2x1y3x2y3 = Bindings.add(x1y2x1y3, x2y3);
-        NumberBinding x1y2x1y3x2y3x2y1 = Bindings.subtract(x1y2x1y3x2y3, x2y1);
-        NumberBinding x1y2x1y3x2y3x2y1x3y1 = Bindings.add(x1y2x1y3x2y3x2y1, x3y1);
-        NumberBinding result = Bindings.subtract(x1y2x1y3x2y3x2y1x3y1, x3y2);
-        NumberBinding nB = Bindings.when(Bindings.lessThan(result, 0)).then(Bindings.negate(result)).otherwise(result);
-
-        area = Bindings.divide(nB,2.0);
+        area = complexBinding;
     }
+    DoubleBinding complexBinding = new DoubleBinding() {
+        {super.bind(x1,y1,x2,y2,x3,y3);}
+        @Override
+        protected double computeValue() {
+            double result = ((x1.get()*y2.get())-(x1.get()*y3.get()));
+            result = result + (x2.get()*y3.get());
+            result = result - (x2.get()*y1.get());
+            result = result + (x3.get()*y1.get());
+            result = result - (x3.get()*y2.get());
+            result = Math.abs(result);
+            result = result/2;
+
+            return result;
+        }
+    };
+
 }
