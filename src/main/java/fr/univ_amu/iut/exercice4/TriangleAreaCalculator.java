@@ -3,6 +3,10 @@ package fr.univ_amu.iut.exercice4;
 import fr.univ_amu.iut.exercice3.TriangleArea;
 import javafx.application.Application;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -38,10 +42,22 @@ public class TriangleAreaCalculator extends Application {
     private Label y2Label = new Label("Y2 :");
     private Label y3Label = new Label("Y3 :");
 
-    private Label areaLabel = new Label("Area :");
-    private TextField areaTextField = new TextField();
+    private static Label areaLabel = new Label("Area :");
+    private static TextField areaTextField = new TextField();
 
     private static GridPane root = new GridPane();
+
+    private DoubleBinding area;
+
+
+    private IntegerProperty x1 = new SimpleIntegerProperty(0);
+    private IntegerProperty y1 = new SimpleIntegerProperty(0);
+
+    private IntegerProperty x2 = new SimpleIntegerProperty(0);
+    private IntegerProperty y2 = new SimpleIntegerProperty(0);
+
+    private IntegerProperty x3 = new SimpleIntegerProperty(0);
+    private IntegerProperty y3 = new SimpleIntegerProperty(0);
 
     private static void configSlider(Slider slider) {
         slider.setMax(10);
@@ -54,6 +70,7 @@ public class TriangleAreaCalculator extends Application {
         slider.setMajorTickUnit(5);
         slider.setMinorTickCount(4);
         slider.setPrefSize(root.getMinWidth()-50,50);
+
     }
 
     @Override
@@ -103,6 +120,7 @@ public class TriangleAreaCalculator extends Application {
     }
 
     private void addArea() {
+        areaTextField.setText("0");
         root.add(areaLabel,0,9);
         root.add(areaTextField,1,9);
     }
@@ -137,6 +155,33 @@ public class TriangleAreaCalculator extends Application {
     }
 
     private void createBinding() {
+        DoubleBinding complexBinding = new DoubleBinding() {
+            {super.bind(x1Slider.valueProperty(),y1Slider.valueProperty(),x2Slider.valueProperty(),
+                    y2Slider.valueProperty(),x3Slider.valueProperty(),y3Slider.valueProperty());}
+            @Override
+            protected double computeValue() {
+                double result = ((x1Slider.valueProperty().get()*y2Slider.valueProperty().get())-(x1Slider.valueProperty().get()*y3Slider.valueProperty().get()));
+                result = result + (x2Slider.valueProperty().get()*y3Slider.valueProperty().get());
+                result = result - (x2Slider.valueProperty().get()*y1Slider.valueProperty().get());
+                result = result + (x3Slider.valueProperty().get()*y1Slider.valueProperty().get());
+                result = result - (x3Slider.valueProperty().get()*y2Slider.valueProperty().get());
+                result = Math.abs(result);
+                result = result/2;
 
+                return result;
+            }
+        };
+        area = complexBinding;
+
+        area.addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                areaTextField.setText(String.valueOf(newValue.intValue()));
+            }
+        });
     }
 }
