@@ -2,10 +2,15 @@ package fr.univ_amu.iut.exercice4;
 
 import fr.univ_amu.iut.exercice3.TriangleArea;
 import javafx.application.Application;
+import javafx.beans.binding.DoubleBinding;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -36,14 +41,25 @@ public class TriangleAreaCalculator extends Application {
     private Label areaLabel = new Label("Area :");
     private TextField areaTextField = new TextField();
 
-    private GridPane root = new GridPane();
+    private static GridPane root = new GridPane();
 
     private static void configSlider(Slider slider) {
-        throw new RuntimeException("Not yet implemented !");
+        slider.setMax(10);
+        slider.setMin(0);
+        slider.setValue(0);
+        slider.setBlockIncrement(1);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setBlockIncrement(1);
+        slider.setMajorTickUnit(5);
+        slider.setMinorTickCount(4);
+        slider.setPrefSize(root.getMinWidth()-50,50);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        root.setMinHeight(500);
+        root.setMinWidth(500);
         configGridPane();
         configSliders();
 
@@ -60,27 +76,67 @@ public class TriangleAreaCalculator extends Application {
     }
 
     private void configSliders() {
-        throw new RuntimeException("Not yet implemented !");
+        configSlider(x1Slider);
+        configSlider(y1Slider);
+        configSlider(x2Slider);
+        configSlider(y2Slider);
+        configSlider(x3Slider);
+        configSlider(y3Slider);
     }
 
     private void configGridPane() {
-        throw new RuntimeException("Not yet implemented !");
+        root.setPadding(new Insets(10,10,10,10));
+        root.setVgap(10);
+        root.setHgap(10);
+        root.add(x1Label,0,1);
+        root.add(y1Label,0,2);
+        root.add(x2Label,0,4);
+        root.add(y2Label,0,5);
+        root.add(x3Label,0,7);
+        root.add(y3Label,0,8);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPrefWidth(50);
+        column1.setMinWidth(50);
+
+        root.getColumnConstraints().add(column1);
 
     }
 
     private void addArea() {
-        throw new RuntimeException("Not yet implemented !");
+        root.add(areaLabel,0,9);
+        root.add(areaTextField,1,9);
     }
 
     private void addSliders() {
-        throw new RuntimeException("Not yet implemented !");
+        ColumnConstraints column = new ColumnConstraints();
+        column.fillWidthProperty();
+
+        column.setHalignment(HPos.CENTER);
+        root.getColumnConstraints().add(column);
+        Node node =x1Slider;
+        root.add(node, 1,1);
+        node =y1Slider;
+        root.add(node, 1,2);
+         node =x2Slider;
+        root.add(node, 1,4);
+        node =y2Slider;
+        root.add(node, 1,5);
+        node =x3Slider;
+        root.add(node, 1,7);
+        node =y3Slider;
+        root.add(node, 1,8);
     }
 
     private void addPointLabels() {
-        throw new RuntimeException("Not yet implemented !");
+        Node node = p1Label;
+        root.add(node, 1,0);
+        node = p2Label;
+        root.add(node, 1,3);
+        node = p3Label;
+        root.add(node, 1,6);
     }
 
     private void createBinding() {
-        throw new RuntimeException("Not yet implemented !");
+
     }
 }
