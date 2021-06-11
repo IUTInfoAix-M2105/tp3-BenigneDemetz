@@ -50,15 +50,6 @@ public class TriangleAreaCalculator extends Application {
     private DoubleBinding area;
 
 
-    private IntegerProperty x1 = new SimpleIntegerProperty(0);
-    private IntegerProperty y1 = new SimpleIntegerProperty(0);
-
-    private IntegerProperty x2 = new SimpleIntegerProperty(0);
-    private IntegerProperty y2 = new SimpleIntegerProperty(0);
-
-    private IntegerProperty x3 = new SimpleIntegerProperty(0);
-    private IntegerProperty y3 = new SimpleIntegerProperty(0);
-
     private static void configSlider(Slider slider) {
         slider.setMax(10);
         slider.setMin(0);
